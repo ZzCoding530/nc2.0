@@ -1,0 +1,34 @@
+/**
+ * uni-app 内置常用样式变量（本项目定制）
+ * 全局 scss 变量，所有 .vue 的 <style lang="scss"> 中可直接使用
+ */
+
+/* 品牌色（NiceOffer Indigo 系） */
+$uni-color-primary: #4F46E5;
+$uni-color-success: #16A34A;
+$uni-color-warning: #F59E0B;
+$uni-color-error: #DC2626;
+
+/* 品牌色系扩展 */
+$brand: #4F46E5;
+$brand-light: #EEF2FF;
+$brand-deep: #4338CA;
+
+/* 文字颜色 */
+$uni-text-color: #111827;
+$uni-text-color-inverse: #fff;
+$uni-text-color-grey: #9CA3AF;
+$uni-text-color-placeholder: #9CA3AF;
+$uni-text-color-disable: #D1D5DB;
+
+/* 背景颜色 */
+$uni-bg-color: #fff;
+$uni-bg-color-grey: #F3F4F6;
+$uni-bg-color-hover: #F9FAFB;
+$uni-bg-color-mask: rgba(17, 24, 39, 0.45);
+$uni-border-color: #E5E7EB;
+
+/* 文字尺寸（正文≥13px：26rpx 起步） */
+$uni-font-size-sm: 26rpx;
+$uni-font-size-base: 28rpx;
+$uni-font-size-lg: 32rpx;

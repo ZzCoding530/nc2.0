@@ -1,0 +1,85 @@
+{
+	"pages": [
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/register/index",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
+		},
+		{
+			"path": "pages/verify/index",
+			"style": {
+				"navigationBarTitleText": "邮箱验证"
+			}
+		},
+		{
+			"path": "pages/reset/index",
+			"style": {
+				"navigationBarTitleText": "重置密码"
+			}
+		},
+		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "NiceOffer 学员中心"
+			}
+		},
+		{
+			"path": "pages/map/index",
+			"style": {
+				"navigationBarTitleText": "课程地图"
+			}
+		},
+		{
+			"path": "pages/lesson/index",
+			"style": {
+				"navigationBarTitleText": "课时详情"
+			}
+		},
+		{
+			"path": "pages/me/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/l/index",
+			"style": {
+				"navigationBarTitleText": "直达链接"
+			}
+		}
+	],
+	"tabBar": {
+		"color": "#9CA3AF",
+		"selectedColor": "#4F46E5",
+		"backgroundColor": "#ffffff",
+		"borderStyle": "black",
+		"items": [
+			{
+				"pagePath": "pages/home/index",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/map/index",
+				"text": "课表"
+			},
+			{
+				"pagePath": "pages/me/index",
+				"text": "我的"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "NiceOffer 学员中心",
+		"navigationBarBackgroundColor": "#4F46E5",
+		"backgroundColor": "#F3F4F6",
+		"rpxCalcMaxDeviceWidth": 480
+	}
+}

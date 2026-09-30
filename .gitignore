@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# 环境与 secret（只进 .env，禁止提交）
+.env
+server/.env
+
+# SQLite 开发库
+server/data/
+
+# Node
+node_modules/
+dist/
+student-h5/dist/
+admin-web/dist/
+unpackage/
+
+# 系统
+.DS_Store
+*.log
