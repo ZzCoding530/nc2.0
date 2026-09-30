@@ -18,7 +18,8 @@
 - [x] D9 APScheduler 定时任务（T-2 / T-0 / 失败重发 / 自动结课）+ 防重 + 重试
 - [x] D10 代码侧完成：`pytest -q` 43 条全绿（覆盖 05 文档 3.2 全部 18 条必测用例）；uvicorn 真实启动冒烟通过（白名单导入→注册→激活→排期→schedule_confirm→学员端接口）
 - [ ] 表 10-2 八条路径真机 walkthrough（需手机 375px 人工执行，代码路径均已就绪）
-- [ ] 上线：切真实 SMTP + 域名 + Caddy 部署 + 送达冒烟（等等待清单 2/3 项）
+- [x] 本地演示部署：单端口托管（API + /admin/ + 学员端 H5 + /docs），全链路可访问（见 DEPLOY.md 第 3 节）
+- [ ] 上线：切真实 SMTP + 域名 + Caddy 部署 + 送达冒烟（等等待清单 2/3 项，步骤见 DEPLOY.md 第 4 节）
 
 ## 验收记录
 | 日期 | 路径/用例 | 结果 | 问题（级别） | 修复 commit | 复验 |
@@ -27,6 +28,7 @@
 | 10-01 | uvicorn 冒烟：/docs + 注册→激活→排期→overview/lesson 接口 | 通过 | 无 | — | — |
 | 10-01 | student-h5 `build:h5` + `build:mp-weixin` | 通过 | 无 | — | — |
 | 10-01 | admin-web `npm run build`（vue-tsc + vite） | 通过 | 无 | — | — |
+| 10-01 | 本地演示部署：学员端 `/`、后台 `/admin/`（含 SPA 路由 fallback）、`/docs`、演示账号登录→overview→admin 学员列表 | 全部通过 | 无 | — | — |
 
 ## 决策记录（偏离文档时必写）
 | 日期 | 决策 | 原因 |
@@ -47,3 +49,8 @@
 - 完成：全量开发（对照 01–05 文档）。后端 FastAPI（auth / 学员 / admin 三组路由 + EmailSender 抽象 + APScheduler + 幂等种子）；学员端 uni-app 9 页面（含 reset 落地页）；运营后台 Vue3+Element Plus 5 页面；alembic 初始迁移；测试 43 条全绿。
 - 问题/决策：见决策记录表（10 条）。测试期发现的 bug 均已修复：register 错误码判定顺序（EMAIL_TAKEN 优先）、magic_link token 属性访问、map payload 缺 part_group、录播 display_status 口径。
 - 明日/待办：表 10-2 八条路径真机 walkthrough；等 SMTP 授权码与 DNS 后做部署与送达冒烟。
+
+### 10-01（第二批：部署）
+- 完成：本地演示部署（FastAPI 单端口托管 API + 两个前端构建产物，含 /admin SPA fallback），预置演示数据（demo 学员 + 4 条排期 + 录播完成标记），全链路 curl 验证通过；新增部署文档 DEPLOY.md（本地开发 / 演示部署 / 生产 Caddy 部署 / 备份 / 上线冒烟全流程）。
+- 问题/决策：演示环境无 docker，邮件后端用 console（邮件正文进服务日志）；生产切 `EMAIL_BACKEND=smtp` 即可，业务逻辑零改动（05 文档 §2.2 抽象层设计的直接验证）。
+- 待办：等 SMTP 授权码 + 域名 DNS 后按 DEPLOY.md 第 4 节上生产。
