@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>交付系统产品说明文档 V1.1 · NiceOffer 交付体系 2.0</title>
+
+  <style>
+    /* ACTIVE_PALETTE_TOKENS — Product Teal（教育学习平台·产品感与成长感） */
+    :root {
+      /* Page / report tokens */
+      --page-bg: #FFFFFF;
+      --page-surface: #F7FAF9;
+      --page-surface-muted: #EDF4F1;
+      --page-text: #1F2A28;
+      --page-text-secondary: #3E4A47;
+      --page-text-muted: #6B7774;
+      --page-text-disabled: #9AA5A2;
+      --page-border: #D9E4E1;
+      --page-brand: #0E8C66;
+      --page-brand-hover: #0A7355;
+      --page-brand-active: #075C45;
+      --page-brand-soft: #E9F7F1;
+      --page-brand-soft-strong: #D2EDE2;
+      --page-brand-text: #0B5C45;
+
+      /* Backward-compatible report variables */
+      --bg: #FFFFFF;
+      --bg2: #F7FAF9;
+      --rule: #D9E4E1;
+      --ink: #1F2A28;
+      --muted: #6B7774;
+      --text-secondary: #3E4A47;
+      --text-disabled: #9AA5A2;
+      --accent: #0E8C66;
+      --accent-hover: #0A7355;
+      --accent-active: #075C45;
+      --accent-soft: #E9F7F1;
+      --accent2: #228BE6;
+
+      /* Semantic tokens */
+      --success: #52C41A;
+      --info: #0E8C66;
+      --reminder: #FF7A45;
+      --warning: #FAAD14;
+      --danger: #FF4D4F;
+      --positive: #52C41A;
+      --negative: #FF4D4F;
+    }
+
+    /* === Structural variables === */
+    :root {
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+      --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px; --radius-pill: 999px;
+      --font-sans: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+      --font-mono: 'SFMono-Regular', Consolas, 'PingFang SC', monospace;
+      --max: 960px;
+    }
+
+    /* === Base styles === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); font-size: 14px; line-height: 1.7; color: var(--ink); background: var(--bg); padding: 2rem 0; }
+    article.page { width: 100%; }
+    .page__content, .report-intro__surface { width: calc(100% - 2rem); max-width: var(--max); margin: 0 auto; }
+    img, svg, canvas { max-width: 100%; height: auto; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); }
+
+    h2 { font-size: 1.35rem; line-height: 1.4; margin: var(--space-7) 0 var(--space-3); padding-bottom: var(--space-2); border-bottom: 1px solid var(--rule); }
+    h2 .secno { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 1.08rem; margin: var(--space-5) 0 var(--space-2); }
+    h4 { font-size: 0.95rem; margin: var(--space-4) 0 var(--space-2); color: var(--text-secondary); }
+    p { margin: var(--space-2) 0; }
+    ul, ol { margin: var(--space-2) 0 var(--space-2) 1.4em; }
+    li { margin: 4px 0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; background: var(--page-surface-muted); border: 1px solid var(--rule); border-radius: var(--radius-sm); padding: 1px 5px; }
+    strong { font-weight: 600; }
+    section > p:first-child { margin-top: var(--space-3); }
+
+    /* === Tables === */
+    .table-wrap { width: 100%; overflow: visible; margin: var(--space-3) 0; }
+    table { width: 100%; border-collapse: collapse; table-layout: auto; }
+    caption { caption-side: top; text-align: left; font-size: 12px; color: var(--muted); padding-bottom: 6px; }
+    th, td { padding: 8px 12px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; overflow-wrap: anywhere; font-size: 13.5px; }
+    th { background: var(--page-surface); font-weight: 600; color: var(--text-secondary); }
+    th[scope="row"] { font-weight: 600; background: transparent; }
+
+    /* === Callout / TOC / flow === */
+    .callout { border: 1px solid var(--rule); border-radius: var(--radius-lg); background: var(--page-surface); padding: var(--space-3) var(--space-4); margin: var(--space-3) 0; font-size: 13.5px; }
+    .callout__label { font-weight: 600; color: var(--page-brand-text); display: block; margin-bottom: 2px; }
+    .toc { border: 1px solid var(--rule); border-radius: var(--radius-lg); background: var(--page-surface); padding: var(--space-4) var(--space-5); margin: var(--space-5) 0; }
+    .toc h2 { border: none; margin: 0 0 var(--space-2); padding: 0; font-size: 1.05rem; }
+    .toc ol { columns: 2; column-gap: 40px; margin: 0; padding-left: 1.4em; font-size: 13.5px; }
+    .toc a { color: var(--ink); }
+    .toc a:hover { color: var(--accent); }
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 4px; list-style: none; margin: var(--space-3) 0; padding: 0; }
+    .flow li { display: inline-flex; align-items: center; gap: 4px; }
+    .flow li:not(:last-child)::after { content: "→"; color: var(--muted); margin-left: 8px; font-size: 12px; }
+    .flow .st { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 1px; border: 1px solid var(--rule); border-radius: var(--radius-md); padding: 4px 10px; background: var(--page-surface); font-size: 13px; line-height: 1.4; }
+    .flow .st small { font-size: 11px; color: var(--muted); }
+    .flow-note { font-size: 12.5px; color: var(--muted); margin-top: -4px; }
+
+    /* === Prototype containers === */
+    .proto { border: 1px solid var(--page-border); border-radius: var(--radius-lg); overflow: hidden; margin: var(--space-3) 0; background: #fff; }
+    .proto__bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 9px 16px; background: var(--page-surface-muted); border-bottom: 1px solid var(--page-border); font-size: 12px; color: var(--muted); }
+    .proto__tag { display: inline-block; background: var(--page-brand-text); color: #fff; border-radius: var(--radius-pill); padding: 1px 10px; font-size: 12px; font-weight: 600; }
+    .proto__bar b { color: var(--text-secondary); font-weight: 600; }
+    .proto__body { padding: var(--space-4); }
+    figure.proto figcaption { padding: 8px 16px; font-size: 12px; color: var(--muted); border-top: 1px dashed var(--page-border); }
+
+    /* === Product UI atoms (shared in prototypes) === */
+    .app-chip { display: inline-block; border-radius: var(--radius-pill); padding: 1px 10px; font-size: 12px; line-height: 1.6; border: 1px solid var(--rule); background: var(--page-surface); color: var(--text-secondary); white-space: nowrap; }
+    .app-chip--code { font-family: var(--font-mono); background: var(--page-surface-muted); }
+    .app-chip--info { background: var(--accent-soft); border-color: var(--page-brand-soft-strong); color: var(--page-brand-text); }
+    .app-chip--ok { background: #F0FAE8; border-color: #CBEAB5; color: #2E6B12; }
+    .app-chip--warn { background: #FFF3E8; border-color: #FAD4B8; color: #9A4E12; }
+    .app-chip--blue { background: #EAF3FE; border-color: #BEDAFB; color: #14508F; }
+    .app-chip--muted { background: var(--page-surface-muted); color: var(--muted); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-radius: var(--radius-md); border: 1px solid transparent; font-size: 13.5px; font-weight: 500; padding: 7px 16px; cursor: pointer; font-family: var(--font-sans); transition: background .15s, border-color .15s, color .15s; }
+    .btn--primary { background: var(--page-brand); color: #fff; }
+    .btn--primary:hover { background: var(--page-brand-hover); }
+    .btn--ghost { background: #fff; border-color: var(--page-border); color: var(--text-secondary); }
+    .btn--ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .btn--sm { padding: 4px 12px; font-size: 12.5px; }
+    .btn--block { width: 100%; }
+    .btn[disabled] { opacity: .45; cursor: not-allowed; }
+    .field { display: block; width: 100%; border: 1px solid var(--page-border); border-radius: var(--radius-md); padding: 8px 12px; font-size: 13.5px; font-family: var(--font-sans); color: var(--ink); background: #fff; }
+    .field:focus { outline: 2px solid var(--page-brand-soft-strong); border-color: var(--accent); }
+    .field--err { border-color: var(--danger); }
+    .field-err { color: var(--danger); font-size: 12px; margin-top: 4px; display: none; }
+    .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--rule); margin-bottom: var(--space-3); }
+    .tab { border: none; background: none; font-family: var(--font-sans); font-size: 13.5px; color: var(--muted); padding: 8px 14px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+    .pane { display: none; }
+    .pane.on { display: block; }
+    .app-card { border: 1px solid var(--page-border); border-radius: var(--radius-lg); background: #fff; }
+    .toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(10px); background: #22312D; color: #fff; padding: 9px 18px; border-radius: var(--radius-md); font-size: 13px; opacity: 0; transition: opacity .25s, transform .25s; z-index: 99; pointer-events: none; max-width: calc(100vw - 32px); text-align: center; }
+    .toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* === Phone shell (mobile-first prototypes) === */
+    .phone-row { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; align-items: flex-start; margin: 6px 0 10px; }
+    .phone-slot { flex: 0 0 auto; }
+    .phone {
+      width: 302px; border: 9px solid #22312D; border-radius: 30px; background: #fff;
+      overflow: hidden; box-shadow: 0 3px 14px rgba(31, 42, 40, .14); position: relative;
+    }
+    .phone__notch { height: 22px; background: #22312D; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; font-size: 10px; }
+    .phone__screen { background: var(--page-surface); padding: 12px 12px 0; min-height: 470px; display: flex; flex-direction: column; gap: 9px; }
+    .phone__tabbar { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--page-border); background: #fff; padding: 5px 0 7px; margin: 10px -12px 0; }
+    .tb-item { text-align: center; font-size: 10.5px; color: var(--muted); padding: 2px 0; border: none; background: none; cursor: pointer; font-family: var(--font-sans); }
+    .tb-item .tb-ic { display: block; font-size: 15px; line-height: 1.25; }
+    .tb-item.on { color: var(--accent); font-weight: 600; }
+    .phone-label { text-align: center; font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+    /* In-phone components */
+    .m-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .m-top b { font-size: 14.5px; }
+    .m-hello { font-size: 11px; color: var(--muted); }
+    .m-card { border: 1px solid var(--page-border); border-radius: var(--radius-lg); background: #fff; padding: 11px 13px; }
+    .m-card h5 { font-size: 13.5px; margin: 0 0 4px; }
+    .m-sub { font-size: 11.5px; color: var(--muted); }
+    .m-sec-title { font-size: 12px; color: var(--page-brand-text); font-weight: 600; margin: 2px 0 -3px; }
+    .prog-line { font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; margin: 3px 0 4px; }
+    .bar { height: 7px; border-radius: 999px; background: var(--page-surface-muted); overflow: hidden; }
+    .bar__fill { height: 100%; border-radius: 999px; background: var(--page-brand); }
+    .m-row { display: flex; gap: 8px; margin-top: 9px; }
+    .m-row .btn { flex: 1; padding: 7px 6px; font-size: 12.5px; }
+    .todo-li { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--page-border); border-radius: var(--radius-md); margin: 6px 0; font-size: 12.5px; background: #fff; }
+    .todo-li .t-main { flex: 1; min-width: 0; }
+    .todo-li .t-sub { font-size: 11px; color: var(--muted); }
+    .backbar { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+    .backbar b { color: var(--ink); font-size: 13.5px; }
+
+    /* === Proto 3: course map in phone === */
+    .mod { border: 1px solid var(--page-border); border-radius: var(--radius-lg); margin-bottom: 7px; background: #fff; overflow: hidden; }
+    .mod__head { display: flex; align-items: center; gap: 8px; width: 100%; background: var(--page-surface); border: none; padding: 10px 12px; font-family: var(--font-sans); font-size: 12.5px; font-weight: 600; color: var(--ink); cursor: pointer; text-align: left; }
+    .mod__head .m-count { font-weight: 400; color: var(--muted); font-size: 11px; }
+    .mod__head .m-arrow { margin-left: auto; color: var(--muted); transition: transform .2s; font-size: 11px; }
+    .mod.closed .m-arrow { transform: rotate(-90deg); }
+    .mod__body { display: grid; gap: 5px; padding: 6px 8px 10px; }
+    .mod.closed .mod__body { display: none; }
+    .lesson-row { display: grid; grid-template-columns: 44px 1fr auto; gap: 8px; align-items: center; border: 1px solid var(--page-border); border-radius: var(--radius-md); padding: 7px 10px; font-size: 12.5px; background: #fff; cursor: pointer; width: 100%; text-align: left; font-family: var(--font-sans); }
+    .lesson-row:hover { border-color: var(--accent); }
+    .lesson-row .l-code { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-secondary); }
+    .lesson-row .l-title b { font-weight: 600; font-size: 12.5px; }
+    .lesson-row .l-sub { display: block; font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .lesson-row.now { background: var(--page-brand-soft); border-color: var(--page-brand-soft-strong); }
+    .lesson-row.done { opacity: .62; }
+    .lesson-row .l-date { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+    /* === Proto 4: lesson detail in phone === */
+    .ld-head { padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+    .ld-head h5 { font-size: 14.5px; margin: 0; }
+    .ld-meta { font-size: 11.5px; color: var(--muted); margin-top: 3px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .meet-card { border: 1px solid var(--page-brand-soft-strong); background: var(--page-brand-soft); border-radius: var(--radius-lg); padding: 10px 12px; }
+    .meet-card .mc-line { display: flex; justify-content: space-between; font-size: 12px; color: var(--page-brand-text); margin: 2px 0; }
+    .pv-block { margin: 4px 0; }
+    .pv-block h6 { font-size: 12px; color: var(--page-brand-text); margin: 0 0 3px; }
+    .pv-block ol, .pv-block ul { margin: 0 0 0 1.2em; font-size: 12px; }
+    .pv-block li { margin: 2px 0; }
+    .kw { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+    .kw .app-chip { font-size: 11px; }
+    .mat-list { list-style: none; margin: 0; padding: 0; }
+    .mat-list li { display: flex; align-items: center; gap: 8px; padding: 9px 10px; border: 1px solid var(--page-border); border-radius: var(--radius-md); margin: 6px 0; font-size: 12.5px; background: #fff; }
+    .mat-list .m-desc { flex: 1; min-width: 0; }
+    .mat-list .m-desc small { display: block; color: var(--muted); font-size: 11px; }
+    .hw-def { background: var(--page-surface); border: 1px solid var(--rule); border-radius: var(--radius-md); padding: 10px 12px; font-size: 12.5px; margin-bottom: 10px; }
+    .v2-note { border: 1px dashed var(--page-border); border-radius: var(--radius-md); padding: 8px 10px; font-size: 11.5px; color: var(--muted); background: var(--page-surface); }
+
+    /* === Proto 5: admin (desktop tool) === */
+    .admin-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; font-size: 12.5px; color: var(--muted); }
+    .admin-scroll { overflow-x: auto; }
+    .admin-table { min-width: 640px; }
+    .admin-table th, .admin-table td { font-size: 12.5px; white-space: nowrap; }
+    .admin-table .field { padding: 5px 8px; font-size: 12.5px; }
+
+    /* === Footer === */
+    footer.doc-footer { margin-top: var(--space-7); border-top: 1px solid var(--rule); padding-top: var(--space-4); font-size: 12.5px; color: var(--muted); }
+    footer.doc-footer h2 { border: none; font-size: 1rem; margin: 0 0 8px; padding: 0; }
+    footer.doc-footer ol { margin: 0 0 12px 1.4em; }
+    .ver-line { margin-top: 8px; }
+    sup a { font-size: 11px; text-decoration: none; }
+
+    /* === Responsive === */
+    @media (max-width: 768px) {
+      body { padding: 1rem 0; }
+      .toc ol { columns: 1; }
+      .phone { width: 100%; max-width: 340px; }
+      .flow li:not(:last-child)::after { margin-left: 4px; }
+    }
+    @media print {
+      .toast { display: none; }
+      body { padding: 0; }
+      .proto { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <article class="page">
+    <header class="report-intro">
+      <div class="report-intro__surface">
+        <div class="report-intro__content">
+          <h1>交付系统产品说明文档</h1>
+          <p class="report-intro__summary">学员需要一个唯一真相源来看课程安排与预习资料。V1 只做最小闭环：邮箱注册登录 + 全部课表与课时信息展示（只读），通知统一走邮件，界面按手机竖屏设计——因为这套 UI 的最终归宿是微信小程序，备案完成前先以 Web 端交付。资料上传下载与作业提交批改全部移入 V2。</p>
+          <p class="report-intro__meta" style="margin-top:14px;font-size:12.5px;color:var(--muted)">
+            NiceOffer 交付体系 2.0 · 学员端 Web（移动优先）&nbsp;|&nbsp; v1.1 · 2026-10-01&nbsp;|&nbsp; 状态：待评审&nbsp;|&nbsp; 读者：Rick（拍板）/ Web 开发 / 讲师与运营&nbsp;|&nbsp; 课程数据源：《课时安排定版 v3》
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="page__content">
+      <main>
+        <nav class="toc" aria-label="目录">
+          <h2>目录</h2>
+          <ol>
+            <li><a href="#sec-bg">需求背景与 V1 范围决策</a></li>
+            <li><a href="#sec-goal">产品定位与目标</a></li>
+            <li><a href="#sec-user">用户与角色</a></li>
+            <li><a href="#sec-story">核心用户故事</a></li>
+            <li><a href="#sec-ia">信息架构</a></li>
+            <li><a href="#sec-func">功能需求详述（V1）</a></li>
+            <li><a href="#sec-state">状态机与数据要点</a></li>
+            <li><a href="#sec-perm">权限与数据隔离</a></li>
+            <li><a href="#sec-nfr">非功能需求</a></li>
+            <li><a href="#sec-road">分期路线与 V1 验收</a></li>
+            <li><a href="#sec-decision">待拍板决策</a></li>
+            <li><a href="#sec-gloss">术语表</a></li>
+          </ol>
+        </nav>
+
+        <!-- ================= 1. 背景 ================= -->
+        <section id="sec-bg">
+          <h2><span class="secno">1</span>需求背景与 V1 范围决策</h2>
+          <p>交付体系 2.0 升级后，学员的 8 个高频提问（课程安排、预习资料、作业、批改、进度……）需要一个唯一真相源来回答。上一版说明文档（v1.0）按「全功能一步到位」设计，包含资料上传下载与作业提交批改。</p>
+          <p><strong>2026-10-01 Rick 定版 V1 范围收缩为四条决定</strong>：</p>
+          <div class="table-wrap">
+            <table>
+              <caption>表 1-1 V1 范围四决定（本版文档的基准）</caption>
+              <thead><tr><th scope="col">#</th><th scope="col">决定</th><th scope="col">对系统的影响</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">1</th><td><strong>不做资料上传下载</strong>（后续版本再做）</td><td>资料区只展示清单与外部链接（网盘 / 在线文档），系统不做站内文件存储、下载、权限管控，砍掉对象存储与文件安全整条复杂度</td></tr>
+                <tr><th scope="row">2</th><td><strong>不做作业上传下载</strong>（后续版本再做）</td><td>作业区只展示作业定义（只读），提交与批改走线下面评 / 邮件，系统砍掉作业状态机、批改流、上传防丢</td></tr>
+                <tr><th scope="row">3</th><td><strong>V1 = 注册登录 + 课表与关键信息展示</strong></td><td>学员端是一个纯展示 + 轻交互产品：邮箱注册登录、学习台、课程地图、课时详情（预习 / 时间 / 上课链接 / 资料清单 / 作业定义）</td></tr>
+                <tr><th scope="row">4</th><td><strong>消息提醒统一邮件；UI 按手机适配，目标微信小程序</strong></td><td>通知通道不做微信 / 飞书推送，全部用邮件（也是账号主键）；学员端 UI 与操作逻辑按手机竖屏设计（3 tab + 底部导航），备案完成后迁入微信小程序，当前先部署 Web 端</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">
+            <span class="callout__label">为什么收窄是正确的</span>
+            V1 要解决的问题只有一个：学员登录后能自己找到「下节课是什么、预习在哪、资料在哪」。这个问题不需要文件系统也不需要批改流。砍掉两者后，V1 开发量约减 40%，且邮件通道与移动端 UI 是无论如何都要做的基础——先做窄而对的，比做宽而慢的先上线。
+          </div>
+          <p>被移出的功能不废弃，全部进入第 10 章分期路线的 V2：作业提交（链接式）与批改、资料站内上传下载、微信小程序端与微信授权登录。</p>
+        </section>
+
+        <!-- ================= 2. 定位与目标 ================= -->
+        <section id="sec-goal">
+          <h2><span class="secno">2</span>产品定位与目标</h2>
+          <p><strong>一句话定位：学员的课程唯一真相源（V1 为只读版）。</strong>课程结构、排期、预习、资料清单在系统里只存一份、只有这里是最新的；邮件只负责把人拉回来，不在邮件里承载内容。</p>
+          <h3>V1 目标（三条，全部可验收）</h3>
+          <ul>
+            <li><strong>登录可用</strong>：学员用邮箱完成注册（含邮箱验证）与登录，全程手机浏览器可完成</li>
+            <li><strong>六问有答案</strong>：8 问中的 6 问（课程安排 / 预习 / 资料 / 下节课 / 进度 / 刷题入口）在系统内自助可答；作业、批改两问 V1 显示定义但交付走线下</li>
+            <li><strong>手机体验达标</strong>：375px 宽度下全部页面无横向滚动、单手可达核心操作，为小程序迁移不留设计债</li>
+          </ul>
+          <h3>8 问自检（V1 口径）</h3>
+          <div class="table-wrap">
+            <table>
+              <caption>表 2-1 学员 8 问与 V1 承载页面</caption>
+              <thead><tr><th scope="col">学员问题</th><th scope="col">V1 回答位置</th><th scope="col">V1 边界</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">课程安排是怎样的</th><td>课程地图（课表 tab）</th><td>完整 4 模块 15 节 + 27 讲</td></tr>
+                <tr><th scope="row">下节课什么时候</th><td>学习台「下一节课」卡 + 邮件提醒</th><td>—</td></tr>
+                <tr><th scope="row">预习在哪</th><td>课时详情 · 预习区（T-2 解锁）</th><td>—</td></tr>
+                <tr><th scope="row">资料在哪</th><td>课时详情 · 资料区（外部链接）</th><td>站内上传下载 V2</td></tr>
+                <tr><th scope="row">作业是什么</th><td>课时详情 · 作业区（只读定义）</th><td>提交走邮件 / 线下面评，线上提交 V2</td></tr>
+                <tr><th scope="row">批改了吗</th><td>—</th><td>V2（V1 面评现场给反馈）</td></tr>
+                <tr><th scope="row">我的进度</th><td>学习台进度条 + 课程地图完成态</th><td>预习已读 / 录播完成由学员手动标记</td></tr>
+                <tr><th scope="row">刷题在哪</th><td>「我的」页挂自学清单链接</th><td>静态清单（M13 题库 V3）</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>成功指标（上线后第一个月）</h3>
+          <ul>
+            <li>注册激活率 ≥ 90%（发出验证邮件后 48h 内完成验证）</li>
+            <li>周登录率 ≥ 80%（每周至少登录一次的在读学员占比）</li>
+            <li>预习已读率 ≥ 70%（1v1 课 T-2 邮件发出后，上课前预习区已标记已读）</li>
+          </ul>
+        </section>
+
+        <!-- ================= 3. 用户与角色 ================= -->
+        <section id="sec-user">
+          <h2><span class="secno">3</span>用户与角色</h2>
+          <div class="table-wrap">
+            <table>
+              <caption>表 3-1 角色定义</caption>
+              <thead><tr><th scope="col">角色</th><th scope="col">是谁</th><th scope="col">使用设备</th><th scope="col">核心诉求</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">学员 Student</th><td>付费学员，一期 5–10 人</td><td><strong>手机浏览器为主</strong>（微信内打开、系统浏览器），少量桌面</td><td>随时知道下节课、预习、资料；进度看得见</td></tr>
+                <tr><th scope="row">运营 / 讲师 Staff</th><td>Rick 与讲师（V1 单角色共用）</td><td>桌面浏览器（内部工具）</td><td>排期填时间与链接、发提醒邮件、看学员进度</td></tr>
+                <tr><th scope="row">系统（自动任务）</th><td>定时任务</th><td>—</td><td>T-2 预习提醒邮件、每周进度周报（V1 手动触发，V1.x 自动化）</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>学员端与运营端是两个入口、两套界面：学员端移动优先（最终进小程序），运营端桌面优先（不进小程序）。V1 不做多讲师分权与操作留痕（V3）。</p>
+        </section>
+
+        <!-- ================= 4. 用户故事 ================= -->
+        <section id="sec-story">
+          <h2><span class="secno">4</span>核心用户故事</h2>
+          <div class="quote"><p>「我买了课，最烦的是不知道下一节上什么、预习材料翻聊天记录翻半天。」——学员</p><cite>用户访谈原话，2026-09</cite></div>
+          <h3>学员侧（V1 全部）</h3>
+          <ul>
+            <li>作为学员，我可以用邮箱注册账号并收到验证邮件，激活后登录，<strong>不用记第 4 个密码之外的东西</strong></li>
+            <li>作为学员，我打开首页就看到下一节课（课名 / 时间 / 上课链接）和我的进度，<strong>不用问任何人</strong></li>
+            <li>作为学员，我可以在课程地图看到全部 4 个模块、15 节 1v1 与 27 讲录播的完整安排</li>
+            <li>作为学员，我点开任何一节课能看到预习内容（三问预写 + 关键词）、资料清单（外链直达）、作业定义</li>
+            <li>作为学员，我可以把预习标记为已读、把录播标记为已完成，让进度条真实前进</li>
+            <li>作为学员，我能在上课前 2 天收到预习提醒邮件、在排期确定时收到确认邮件，<strong>邮件里只有一句话和链接，点开直达对应页面</strong></li>
+            <li>作为学员，我在「我的」页能看到账号信息、所在班期、通知邮箱，能退出登录</li>
+          </ul>
+          <h3>运营侧（V1 全部）</h3>
+          <ul>
+            <li>作为运营，我给学员排课时只填「时间 + 上课链接」，保存后学员端 1 分钟内可见</li>
+            <li>作为运营，我可以给某节课的学员批量发送预习提醒 / 上课确认邮件，并看到发送记录</li>
+            <li>作为运营，我能在学员列表看到每个人的进度（已上课数、预习已读数），发现掉队的人</li>
+            <li>作为运营，我能预览学员视角的课程地图，确认上架内容无误</li>
+          </ul>
+          <div class="callout">
+            <span class="callout__label">明确不做（V1）</span>
+            作业提交与批改流、资料上传下载与站内存储、微信 / 飞书消息推送、多讲师分权、录播观看进度自动采集（V1 学员手动标记）、支付与订单。这些在 10.1 分期表中各有归属版本。
+          </div>
+        </section>
+
+        <!-- ================= 5. 信息架构 ================= -->
+        <section id="sec-ia">
+          <h2><span class="secno">5</span>信息架构</h2>
+          <p>学员端采用<strong>三 tab 底部导航</strong>（小程序标准范式）：首页 / 课表 / 我的。这是微信小程序的通用结构，V1 直接按此组织，迁移时导航零改动。</p>
+          <pre style="font-family:var(--font-mono);font-size:12px;line-height:1.8;background:var(--page-surface);border:1px solid var(--rule);border-radius:8px;padding:14px;overflow-x:auto"><code>学员端（移动优先 H5）
+├─ 登录 / 注册（未登录态）
+│   ├─ 邮箱+密码 登录
+│   ├─ 注册 → 验证邮件 → 激活
+│   └─ 忘记密码 → 邮件重置
+└─ 主框架（底部三 tab）
+    ├─ 首页（学习台）
+    │   ├─ 进度总览卡
+    │   ├─ 下一节课卡（预习直达 + 上课链接）
+    │   └─ 待办列表（预习 / 录播标记）
+    ├─ 课表（课程地图）
+    │   ├─ 模块一 CS 理论 C01–C04
+    │   ├─ 模块二 论坛项目 E01–E05
+    │   ├─ 模块三 AI 理论 T01–T03
+    │   ├─ 模块四 录播 D01–D27 + 验收 V01–V03
+    │   └─ 课时详情页（预习 / 资料 / 作业 · 只读）
+    └─ 我的
+        ├─ 账号信息（邮箱 / 班期 / 姓名）
+        ├─ 刷题自学清单（外链）
+        └─ 退出登录
+
+运营后台（桌面优先，独立入口 /admin）
+├─ 登录
+├─ 学员管理（列表 + 进度 + 班期）
+├─ 排期管理（课时 × 学员：时间 + 链接 + 状态）
+├─ 课程内容（课时卡只读预览）
+└─ 邮件中心（模板预览 + 发送 + 发送记录）</code></pre>
+          <p>页面路由与接口的完整对应关系见配套开发文档《04_页面清单与邮件通知》。</p>
+        </section>
+        <!-- ================= 6. 功能详述 ================= -->
+        <section id="sec-func">
+          <h2><span class="secno">6</span>功能需求详述（V1）</h2>
+          <p>V1 共 7 个功能模块。原型-1 至原型-4 为学员端手机竖屏演示（宽 375px 设计基准，演示按比例缩放），原型-5 为运营后台（桌面）。所有演示数据均为假数据。</p>
+          <div class="table-wrap">
+            <table>
+              <caption>表 6-1 模块清单与原型索引</caption>
+              <thead><tr><th scope="col">模块</th><th scope="col">回答哪个问题</th><th scope="col">原型</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">6.1 账号与注册登录</th><td>学员怎么进来</td><td>原型-1</td></tr>
+                <tr><th scope="row">6.2 学习台（首页）</th><td>下节课啥时候 / 进度慢了吗</td><td>原型-2</td></tr>
+                <tr><th scope="row">6.3 课程地图（课表）</th><td>课程安排是怎样的</td><td>原型-3</td></tr>
+                <tr><th scope="row">6.4 课时详情页（只读）</th><td>预习有吗 / 链接给我 / 资料在哪 / 作业是什么</td><td>原型-4</td></tr>
+                <tr><th scope="row">6.5 消息提醒（邮件）</th><td>学员怎么被触达回来</td><td>—</td></tr>
+                <tr><th scope="row">6.6 运营后台</th><td>排期与邮件由谁维护</td><td>原型-5</td></tr>
+                <tr><th scope="row">6.7 移动端适配规范</th><td>怎么保证手机体验与小程序迁移</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>6.1 账号与注册登录</h3>
+          <p><strong>账号主键 = 邮箱</strong>（与通知通道一致，V1 唯一登录方式）。流程：注册（邮箱 + 密码 + 姓名）→ 系统发验证邮件 → 点击链接激活 → 登录。登录态保持 14 天，过期自动回落登录页。</p>
+          <figure class="proto">
+            <div class="proto__bar"><span class="proto__tag">原型-1</span><b>登录 / 注册</b>（可交互：登录↔注册 tab 切换、表单校验、模拟注册发信）</div>
+            <div class="proto__body">
+              <div class="phone-row">
+                <div class="phone-slot">
+                  <div class="phone">
+                    <div class="phone__notch"><span>9:41</span><span>●●● 5G</span></div>
+                    <div class="phone__screen">
+                      <div style="text-align:center;padding:10px 0 2px">
+                        <div style="font-size:15px;font-weight:700;color:var(--page-brand-text)">NiceOffer</div>
+                        <div class="m-sub" style="font-size:11px">AI 求职陪跑 · 学员中心</div>
+                      </div>
+                      <div class="tabs" style="margin-bottom:2px">
+                        <button class="tab" type="button" id="p1-tab-login" aria-selected="true">登录</button>
+                        <button class="tab" type="button" id="p1-tab-reg" aria-selected="false">注册</button>
+                      </div>
+                      <div class="pane on" id="p1-pane-login">
+                        <div class="m-card">
+                          <label class="m-sub" style="display:block;margin-bottom:3px">邮箱</label>
+                          <input class="field" type="email" id="p1-email" placeholder="you@example.com">
+                          <label class="m-sub" style="display:block;margin:8px 0 3px">密码</label>
+                          <input class="field" type="password" id="p1-pass" placeholder="8–20 位，含字母与数字">
+                          <div class="field-err" id="p1-err" style="display:none">邮箱或密码格式不正确</div>
+                          <button class="btn btn--primary btn--block" type="button" id="p1-login" style="margin-top:12px">登 录</button>
+                          <div class="m-sub" style="text-align:center;margin-top:8px">
+                            <a href="#" data-toast="重置链接已发送至邮箱（演示）">忘记密码</a>
+                          </div>
+                        </div>
+                        <div class="m-sub" style="text-align:center;margin-top:6px;font-size:10.5px">微信一键登录将在小程序版上线后开放</div>
+                      </div>
+                      <div class="pane" id="p1-pane-reg">
+                        <div class="m-card">
+                          <label class="m-sub" style="display:block;margin-bottom:3px">邮箱（后续通知都发这里）</label>
+                          <input class="field" type="email" id="p1-remail" placeholder="you@example.com">
+                          <label class="m-sub" style="display:block;margin:8px 0 3px">姓名</label>
+                          <input class="field" type="text" id="p1-rname" placeholder="怎么称呼你">
+                          <label class="m-sub" style="display:block;margin:8px 0 3px">设置密码</label>
+                          <input class="field" type="password" id="p1-rpass" placeholder="8–20 位，含字母与数字">
+                          <button class="btn btn--primary btn--block" type="button" id="p1-register" style="margin-top:12px">注册并发送验证邮件</button>
+                        </div>
+                        <div class="m-sub" style="text-align:center;margin-top:6px;font-size:10.5px">注册后请到邮箱点击激活链接（24h 内有效）</div>
+                      </div>
+                      <div class="pane" id="p1-pane-sent" style="display:none">
+                        <div class="m-card" style="text-align:center;padding:22px 14px">
+                          <div style="width:42px;height:42px;border-radius:50%;background:var(--accent-soft);color:var(--page-brand-text);font-size:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px">✉</div>
+                          <h5>验证邮件已发送</h5>
+                          <p class="m-sub" id="p1-sent-to" style="margin:4px 0 10px">请查收邮箱并在 24 小时内点击激活链接</p>
+                          <button class="btn btn--ghost btn--block" type="button" id="p1-back">返回登录</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="phone-label">登录 / 注册 · 邮箱为主键</div>
+                </div>
+              </div>
+            </div>
+            <figcaption>原型-1 · 登录注册。邮箱即账号即通知地址，一次输入两用；微信登录留给小程序版（决策 D1）。</figcaption>
+          </figure>
+          <h4>验收要点</h4>
+          <ul>
+            <li>邮箱格式与密码强度（≥8 位，含字母数字）前端 + 后端双重校验</li>
+            <li>验证邮件 60 秒内到达；激活链接一次性、24h 过期、过期可重发</li>
+            <li>未激活账号登录时提示「请先查收验证邮件」并给重发入口</li>
+            <li>连续 5 次密码错误锁定 10 分钟（提示走邮件）</li>
+            <li>注册时由运营预先导入白名单（邮箱 → 班期），非白名单邮箱注册提示联系班主任</li>
+          </ul>
+
+          <h3>6.2 学习台（首页 tab）</h3>
+          <p>学习台回答两件事：<strong>我在哪</strong>（进度）与<strong>下一步做什么</strong>（下一节课 + 待办）。自上而下：进度总览 → 下一节课卡 → 待办列表。</p>
+          <figure class="proto">
+            <div class="proto__bar"><span class="proto__tag">原型-2</span><b>学习台（首页）+ 我的</b>（可交互：标记预习已读、按钮反馈、tab 指示）</div>
+            <div class="proto__body">
+              <div class="phone-row">
+                <div class="phone-slot">
+                  <div class="phone">
+                    <div class="phone__notch"><span>9:41</span><span>●●● 5G</span></div>
+                    <div class="phone__screen">
+                      <div class="m-top">
+                        <div><b>晚上好，同学</b><div class="m-hello">202610 期 · 已开学 3 周</div></div>
+                        <span class="app-chip app-chip--info">在读</span>
+                      </div>
+                      <div class="m-card">
+                        <h5>我的进度</h5>
+                        <div class="prog-line"><span>1v1 正课</span><span>3 / 15 节</span></div>
+                        <div class="bar"><div class="bar__fill" style="width:20%"></div></div>
+                        <div class="prog-line" style="margin-top:7px"><span>录播</span><span>6 / 27 讲</span></div>
+                        <div class="bar"><div class="bar__fill" style="width:22%"></div></div>
+                      </div>
+                      <div class="m-card" style="border-color:var(--page-brand-soft-strong);background:var(--page-brand-soft)">
+                        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                          <span class="app-chip app-chip--code">T01</span><h5 style="margin:0">Transformer 架构</h5><span class="app-chip app-chip--ok">已排课</span>
+                        </div>
+                        <div class="m-sub" style="margin-top:4px;color:var(--page-brand-text)">10 月 10 日（周六）20:00 · 距上课 2 天</div>
+                        <div class="m-row">
+                          <button class="btn btn--primary" type="button" data-toast="进入 T01 预习（见原型-4）">看预习</button>
+                          <button class="btn btn--ghost" type="button" data-toast="跳转 1v1 会议链接（腾讯会议）">上课链接</button>
+                        </div>
+                      </div>
+                      <div class="m-sec-title">待办</div>
+                      <div>
+                        <div class="todo-li">
+                          <div class="t-main">预习 T01 · 三问预写<div class="t-sub">预习邮件已于 10-08 发出</div></div>
+                          <button class="btn btn--ghost btn--sm" type="button" data-done-pv>标记已读</button>
+                        </div>
+                        <div class="todo-li">
+                          <div class="t-main">录播 D01–D02 · 模型 API 工程<div class="t-sub">V01 验收前完成 6 讲</div></div>
+                          <button class="btn btn--ghost btn--sm" type="button" data-toast="已标记：D01–D02 观看完成（演示）">标记完成</button>
+                        </div>
+                      </div>
+                      <div class="phone__tabbar">
+                        <button class="tb-item on" type="button"><span class="tb-ic">🏠</span>首页</button>
+                        <button class="tb-item" type="button" data-toast="切到课表（见原型-3）"><span class="tb-ic">🗓</span>课表</button>
+                        <button class="tb-item" type="button" data-toast="切到我的（见右侧屏）"><span class="tb-ic">👤</span>我的</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="phone-label">首页 · 学习台</div>
+                </div>
+                <div class="phone-slot">
+                  <div class="phone">
+                    <div class="phone__notch"><span>9:41</span><span>●●● 5G</span></div>
+                    <div class="phone__screen">
+                      <div class="m-top"><b>我的</b><span class="app-chip app-chip--muted">202610 期</span></div>
+                      <div class="m-card">
+                        <div class="prog-line" style="margin:0 0 5px"><span style="color:var(--ink);font-weight:600">账号信息</span></div>
+                        <div class="todo-li" style="margin:4px 0"><div class="t-main">姓名<div class="t-sub">同学</div></div></div>
+                        <div class="todo-li" style="margin:4px 0"><div class="t-main">邮箱（通知地址）<div class="t-sub">you@example.com</div></div></div>
+                        <div class="todo-li" style="margin:4px 0"><div class="t-main">班期<div class="t-sub">202610 期 · 2026-10-01 开班</div></div></div>
+                        <div class="todo-li" style="margin:4px 0"><div class="t-main">密码<div class="t-sub">上次修改：—</div></div><button class="btn btn--ghost btn--sm" type="button" data-toast="重置链接已发送（演示）">修改</button></div>
+                      </div>
+                      <div class="m-card">
+                        <div class="prog-line" style="margin:0 0 5px"><span style="color:var(--ink);font-weight:600">学习资料</span></div>
+                        <div class="todo-li" style="margin:4px 0"><div class="t-main">数据结构自学清单 + 自测题库<div class="t-sub">入学诊断配套</div></div><span style="color:var(--accent);font-size:12px">›</span></div>
+                        <div class="todo-li" style="margin:4px 0"><div class="t-main">AI 岗刷题路线 SOP<div class="t-sub">M13 产出后上架</div></div><span style="color:var(--accent);font-size:12px">›</span></div>
+                      </div>
+                      <div class="m-card">
+                        <div class="todo-li" style="margin:0"><div class="t-main">退出登录</div></div>
+                      </div>
+                      <div class="m-sub" style="text-align:center;font-size:10.5px;margin-top:auto;padding-bottom:6px">NiceOffer 学员端 v1 · 遇到问题邮件联系班主任</div>
+                      <div class="phone__tabbar">
+                        <button class="tb-item" type="button" data-toast="切回首屏（见左侧屏）"><span class="tb-ic">🏠</span>首页</button>
+                        <button class="tb-item" type="button" data-toast="切到课表（见原型-3）"><span class="tb-ic">🗓</span>课表</button>
+                        <button class="tb-item on" type="button"><span class="tb-ic">👤</span>我的</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="phone-label">我的 · 账号与清单入口</div>
+                </div>
+              </div>
+            </div>
+            <figcaption>原型-2 · 学习台（左）与我的（右）。底部三 tab 为小程序标准范式；「我的」页承载账号信息与刷题等静态清单入口。</figcaption>
+          </figure>
+          <h4>验收要点</h4>
+          <ul>
+            <li>下一节课卡取「已排课且时间在未来」的最近一节；无排课时显示「待排期 · 联系班主任」占位</li>
+            <li>进度数字 = 已上课 / 总课时（1v1 线）与已标记完成 / 总讲数（录播线），两条独立进度</li>
+            <li>待办由系统规则生成：预习（T-2 已解锁未读）、录播（当前部分未完成）；无待办时显示鼓励文案</li>
+            <li>上课链接按钮在开课前 30 分钟内高亮呼吸提示</li>
+          </ul>
+
+          <h3>6.3 课程地图（课表 tab）</h3>
+          <p>全部课程结构的唯一展示位：4 模块可折叠，课时行显示代号、标题、状态与排期时间，当前位置高亮。结构数据 100% 来自《课时安排定版 v3》。</p>
+          <figure class="proto">
+            <div class="proto__bar"><span class="proto__tag">原型-3</span><b>课程地图</b>（可交互：模块折叠展开、点击课时卡）</div>
+            <div class="proto__body">
+              <div class="phone-row">
+                <div class="phone-slot">
+                  <div class="phone">
+                    <div class="phone__notch"><span>9:41</span><span>●●● 5G</span></div>
+                    <div class="phone__screen">
+                      <div class="m-top"><b>课程地图</b><span class="app-chip app-chip--info">15 节 1v1 + 27 讲录播</span></div>
+                      <div class="mod">
+                        <button class="mod__head" type="button" data-mod>① CS 理论基础<span class="m-count">C01–C04 · 4 节</span><span class="m-arrow">▾</span></button>
+                        <div class="mod__body">
+                          <button class="lesson-row done" type="button" data-toast="打开课时详情：C01（已完成）"><span class="l-code">C01</span><span class="l-title"><b>计算机网络</b><span class="l-sub">已完成 · 10-03</span></span><span class="l-date">✓</span></button>
+                          <button class="lesson-row done" type="button" data-toast="打开课时详情：C02（已完成）"><span class="l-code">C02</span><span class="l-title"><b>操作系统与 Linux</b><span class="l-sub">已完成 · 10-05</span></span><span class="l-date">✓</span></button>
+                          <button class="lesson-row done" type="button" data-toast="打开课时详情：C03（已完成）"><span class="l-code">C03</span><span class="l-title"><b>数据库与缓存</b><span class="l-sub">已完成 · 10-07</span></span><span class="l-date">✓</span></button>
+                          <button class="lesson-row done" type="button" data-toast="打开课时详情：C04（已完成）"><span class="l-code">C04</span><span class="l-title"><b>语言专题与八股串讲</b><span class="l-sub">已完成 · 10-08</span></span><span class="l-date">✓</span></button>
+                        </div>
+                      </div>
+                      <div class="mod">
+                        <button class="mod__head" type="button" data-mod>② 基础 Coding · 论坛项目<span class="m-count">E01–E05 · 5 节</span><span class="m-arrow">▾</span></button>
+                        <div class="mod__body">
+                          <button class="lesson-row done" type="button" data-toast="打开课时详情：E01（已完成）"><span class="l-code">E01</span><span class="l-title"><b>论坛 v1 · 能用版</b><span class="l-sub">CRUD 全通 · 已完成</span></span><span class="l-date">✓</span></button>
+                          <button class="lesson-row now" type="button" data-toast="打开课时详情：E02（当前）"><span class="l-code">E02</span><span class="l-title"><b>论坛 v2 · 缓存与异步版</b><span class="l-sub"><span class="app-chip app-chip--info" style="font-size:10px;padding:0 6px">NOW</span> 10-12 20:00</span></span><span class="l-date">›</span></button>
+                          <button class="lesson-row" type="button" data-toast="打开课时详情：E03（未解锁）"><span class="l-code">E03</span><span class="l-title"><b>论坛 v3 · 高并发防线版</b><span class="l-sub">待排期</span></span><span class="l-date">·</span></button>
+                          <button class="lesson-row" type="button" data-toast="打开课时详情：E04（未解锁）"><span class="l-code">E04</span><span class="l-title"><b>论坛 v4 · 分布式版</b><span class="l-sub">待排期</span></span><span class="l-date">·</span></button>
+                          <button class="lesson-row" type="button" data-toast="打开课时详情：E05（未解锁）"><span class="l-code">E05</span><span class="l-title"><b>论坛 v5 · 上线版</b><span class="l-sub">待排期</span></span><span class="l-date">·</span></button>
+                        </div>
+                      </div>
+                      <div class="mod">
+                        <button class="mod__head" type="button" data-mod>③ AI 理论基础<span class="m-count">T01–T03 · 3 节</span><span class="m-arrow">▾</span></button>
+                        <div class="mod__body">
+                          <button class="lesson-row now" type="button" data-toast="打开课时详情：T01 Transformer 架构（见原型-4）"><span class="l-code">T01</span><span class="l-title"><b>Transformer 架构</b><span class="l-sub">预习已发 · 10-10 20:00</span></span><span class="l-date">›</span></button>
+                          <button class="lesson-row" type="button" data-toast="打开课时详情：T02（未解锁）"><span class="l-code">T02</span><span class="l-title"><b>RAG 系统</b><span class="l-sub">待排期</span></span><span class="l-date">·</span></button>
+                          <button class="lesson-row" type="button" data-toast="打开课时详情：T03（未解锁）"><span class="l-code">T03</span><span class="l-title"><b>多 Agent 开发</b><span class="l-sub">待排期</span></span><span class="l-date">·</span></button>
+                        </div>
+                      </div>
+                      <div class="mod closed">
+                        <button class="mod__head" type="button" data-mod>④ AI Coding · 录播+验收<span class="m-count">D01–D27 + V01–V03</span><span class="m-arrow">▾</span></button>
+                        <div class="mod__body">
+                          <button class="lesson-row" type="button" data-toast="打开录播区：第一部分 模型 API 工程（D01–D06）"><span class="l-code">D01–06</span><span class="l-title"><b>模型 API 工程</b><span class="l-sub">录播 6 讲 · 已看 6</span></span><span class="l-date">›</span></button>
+                          <button class="lesson-row" type="button" data-toast="打开录播区：V01 验收课"><span class="l-code">V01</span><span class="l-title"><b>验收课 V01</b><span class="l-sub">待排期</span></span><span class="l-date">·</span></button>
+                        </div>
+                      </div>
+                      <div class="mod closed">
+                        <button class="mod__head" type="button" data-mod>灵活 · 答疑课<span class="m-count">按需预约 · 不限</span><span class="m-arrow">▾</span></button>
+                        <div class="mod__body"><div class="m-sub" style="padding:2px 4px 4px">简历 / 模拟面试 / 环境救援 · V1 展示班主任联系方式，预约走邮件</div></div>
+                      </div>
+                      <div class="phone__tabbar">
+                        <button class="tb-item" type="button" data-toast="切回首屏（见原型-2）"><span class="tb-ic">🏠</span>首页</button>
+                        <button class="tb-item on" type="button"><span class="tb-ic">🗓</span>课表</button>
+                        <button class="tb-item" type="button" data-toast="切到我的（见原型-2 右屏）"><span class="tb-ic">👤</span>我的</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="phone-label">课表 · 4 模块折叠视图</div>
+                </div>
+              </div>
+            </div>
+            <figcaption>原型-3 · 课程地图。录播 27 讲按部分折叠为三组（D01–06 / D07–19 / D20–27），避免长列表；当前位置以 NOW 标记。</figcaption>
+          </figure>
+          <h4>验收要点</h4>
+          <ul>
+            <li>结构（模块 / 课时 / 代号 / 标题 / 类型）为后台数据驱动，非前端硬编码；Demo 线回归后追加课时卡前端零改动</li>
+            <li>状态色语义：灰=未解锁/待排期、绿=已完成、高亮=当前（NOW）、蓝=预习已发</li>
+            <li>录播课时行显示「已看 n / 总讲数」；点开显示该部分逐讲清单与完成标记</li>
+            <li>模块折叠状态本地记忆（下次进入保持）</li>
+          </ul>
+
+          <h3>6.4 课时详情页（只读）</h3>
+          <p>一节课的全部信息一页收口：<strong>上课信息卡（时间 + 链接）→ 预习 → 资料 → 作业</strong>。四个区块全部只读展示（V1 无提交无下载，资料走外部链接）。</p>
+          <figure class="proto">
+            <div class="proto__bar"><span class="proto__tag">原型-4</span><b>课时详情 · T01 Transformer 架构</b>（可交互：三区 tab、标记预习已读）</div>
+            <div class="proto__body">
+              <div class="phone-row">
+                <div class="phone-slot">
+                  <div class="phone">
+                    <div class="phone__notch"><span>9:41</span><span>●●● 5G</span></div>
+                    <div class="phone__screen">
+                      <div class="backbar"><span>‹ 课表</span><span class="app-chip app-chip--code">T01</span><span class="app-chip app-chip--info">预习中</span></div>
+                      <div class="ld-head">
+                        <h5>Transformer 架构</h5>
+                        <div class="ld-meta"><span>1v1 · 90–100 min</span><span>模块三 · AI 理论</span><span>课后 1–3 h</span></div>
+                      </div>
+                      <div class="meet-card">
+                        <div class="mc-line"><span>上课时间</span><b>10-10（周六）20:00</b></div>
+                        <div class="mc-line"><span>上课方式</span><b>腾讯会议 · 1v1</b></div>
+                        <div class="m-row" style="margin-top:8px">
+                          <button class="btn btn--primary" type="button" data-toast="跳转会议链接（开课前 30 分钟可进入）">进入教室</button>
+                          <button class="btn btn--ghost" type="button" data-toast="已加入手机日历（演示）">加日历</button>
+                        </div>
+                      </div>
+                      <div class="tabs">
+                        <button class="tab" type="button" id="p4-tab-pv" aria-selected="true">预习</button>
+                        <button class="tab" type="button" id="p4-tab-mat" aria-selected="false">资料</button>
+                        <button class="tab" type="button" id="p4-tab-hw" aria-selected="false">作业</button>
+                      </div>
+                      <div class="pane on" id="p4-pane-pv">
+                        <div class="m-card">
+                          <div class="pv-block">
+                            <h6>三问预写（上课前写下你的答案）</h6>
+                            <ol>
+                              <li>Attention 能并行而 RNN 不能，代价是什么？</li>
+                              <li>位置信息在哪一层注入、为什么要？</li>
+                              <li>KV Cache 缓存了什么、省了什么？</li>
+                            </ol>
+                          </div>
+                          <div class="pv-block">
+                            <h6>关键词</h6>
+                            <div class="kw">
+                              <span class="app-chip app-chip--muted">归纳偏置</span><span class="app-chip app-chip--muted">门控</span><span class="app-chip app-chip--muted">QKV</span><span class="app-chip app-chip--muted">RoPE</span><span class="app-chip app-chip--muted">KV Cache</span>
+                            </div>
+                          </div>
+                          <button class="btn btn--ghost btn--block" type="button" id="p4-read" style="margin-top:8px">标记为已读</button>
+                        </div>
+                      </div>
+                      <div class="pane" id="p4-pane-mat">
+                        <ul class="mat-list">
+                          <li>
+                            <div class="m-desc">《大规模语言模型：从理论到实践》· 架构章<small>必发 · 在线阅读链接</small></div>
+                            <button class="btn btn--ghost btn--sm" type="button" data-toast="打开外部链接（演示）">打开 ›</button>
+                          </li>
+                          <li>
+                            <div class="m-desc">问题链讲稿 · 学员版 HTML<small>自制 · Part1 已成稿</small></div>
+                            <button class="btn btn--ghost btn--sm" type="button" data-toast="打开外部链接（演示）">打开 ›</button>
+                          </li>
+                          <li>
+                            <div class="m-desc">《动手学深度学习》前几章<small>自学补充 · ML 速通配套</small></div>
+                            <button class="btn btn--ghost btn--sm" type="button" data-toast="打开外部链接（演示）">打开 ›</button>
+                          </li>
+                        </ul>
+                        <div class="v2-note">V1 资料统一外部链接（网盘 / 在线文档），不做站内上传下载；讲义更新由运营换链接，学员端即时生效。</div>
+                      </div>
+                      <div class="pane" id="p4-pane-hw">
+                        <div class="hw-def">
+                          <b>作业定义</b><br>
+                          手画 Transformer block 图（含数据流与张量形状）+ 问题笔记。<br>
+                          <span class="m-sub">T+1 布置 · 面评时讲解</span>
+                        </div>
+                        <div class="v2-note">V1 作业通过邮件提交（回复本课预习邮件即可），讲师在下次 1v1 面评中点评。线上提交与批改留到 V2。</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="phone-label">课时详情 · 只读四区</div>
+                </div>
+              </div>
+            </div>
+            <figcaption>原型-4 · 课时详情。预习区完整承载三问预写与关键词；资料区全部外链；作业区只展示定义并注明 V1 交付方式（邮件 / 面评）。</figcaption>
+          </figure>
+          <h4>验收要点</h4>
+          <ul>
+            <li>预习区在 T-2 前 0 点起解锁，之前显示锁定态（时间 + 「预习将在 T-2 解锁」）；解锁由排期时间自动推导</li>
+            <li>资料链接运营可换（换后学员端即时生效），外链域名不限制但展示完整 URL 防钓鱼</li>
+            <li>「加日历」生成 .ics 或跳系统日历（iOS / Android 兼容）</li>
+            <li>已上课的课时卡：预习/资料仍可看，上课信息卡变历史态（显示实际上课日期）</li>
+            <li>录播课时卡：显示逐讲清单 + 每讲时长 + 完成标记开关 + 配套代码包外链（V1 视频链接即外部链接）</li>
+          </ul>
+
+          <h3>6.5 消息提醒（邮件通道）</h3>
+          <p>V1 通知通道<strong>只有邮件</strong>。原则：邮件里只放一句话 + 一个直达链接，内容永远在系统里看（拉回机制，不承载内容）。</p>
+          <div class="table-wrap">
+            <table>
+              <caption>表 6-2 邮件类型与触发（V1）</caption>
+              <thead><tr><th scope="col">邮件</th><th scope="col">触发时点</th><th scope="col">内容要点</th><th scope="col">V1 方式</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">验证 / 重置邮件</th><td>注册、忘记密码</td><td>一次性链接，24h 有效</td><td>系统自动</td></tr>
+                <tr><th scope="row">开班欢迎邮件</th><td>运营开通白名单后</td><td>登录地址 + 三步上手（登录 → 看课表 → 做预习）</td><td>运营手动触发</td></tr>
+                <tr><th scope="row">排期确认邮件</th><td>运营保存排期时</td><td>课次 + 时间 + 上课链接 + 「加日历」</td><td>保存时自动</td></tr>
+                <tr><th scope="row">排期变更邮件</th><td>运营改时间时</td><td>原时间 → 新时间，红色标注变更</td><td>保存时自动</td></tr>
+                <tr><th scope="row">预习提醒邮件（T-2）</th><td>上课前 2 天 10:00</th><td>「T01 的预习已解锁」+ 直达预习区链接</td><td>定时任务自动（V1 可手动兜底）</td></tr>
+                <tr><th scope="row">上课提醒邮件（T-0）</th><td>上课当天 09:00</td><td>今晚 20:00 上课 + 进入教室链接</td><td>定时任务自动（V1 可手动兜底）</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h4>验收要点</h4>
+          <ul>
+            <li>所有邮件经同一 SMTP 服务发送，发件人显示统一品牌名（如「NiceOffer 班主任」）</li>
+            <li>同一学员同一邮件类型 24h 内不重发（防重）；发送失败自动重试 2 次，仍失败进运营后台的失败列表</li>
+            <li>每封邮件含退订说明（合规），链接均带学员专属 token，免登录直达对应页面（有效期 7 天）</li>
+            <li>运营后台可看到全部发送记录（收件人 / 类型 / 时间 / 状态）</li>
+          </ul>
+
+          <h3>6.6 运营后台（桌面端）</h3>
+          <p>运营后台是内部工具，<strong>桌面优先，不进小程序</strong>。V1 四块：学员管理、排期管理、内容预览、邮件中心。排期管理是核心——同一课时卡在不同学员处独立排期（班期隔离的最小体现）。</p>
+          <figure class="proto">
+            <div class="proto__bar"><span class="proto__tag">原型-5</span><b>运营后台 · 排期管理</b>（可交互：填写保存、发送邮件）</div>
+            <div class="proto__body">
+              <div class="admin-top">
+                <span class="app-chip app-chip--info">运营后台</span><b>排期管理</b><span>班期：202610 期（3 名在读学员）</span>
+              </div>
+              <div class="admin-scroll">
+                <table class="admin-table">
+                  <caption>表 · 课时 × 学员排期（演示数据）</caption>
+                  <thead><tr><th scope="col">课时</th><th scope="col">学员</th><th scope="col">上课时间</th><th scope="col">上课链接</th><th scope="col">状态</th><th scope="col">动作</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><span class="app-chip app-chip--code">T01</span> Transformer 架构</th><td>同学 A</td>
+                      <td><input class="field" type="datetime-local" value="2026-10-10T20:00"></td>
+                      <td><input class="field" type="url" value="https://meeting.tencent.com/d/xxx"></td>
+                      <td><select class="field"><option>已排课</option><option>已完成</option><option>未排</option></select></td>
+                      <td><button class="btn btn--primary btn--sm" type="button" data-save>保存</button> <button class="btn btn--ghost btn--sm" type="button" data-toast="T-2 预习提醒邮件已加入发送队列">发预习邮件</button></td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><span class="app-chip app-chip--code">T01</span> Transformer 架构</th><td>同学 B</td>
+                      <td><input class="field" type="datetime-local" value="2026-10-11T15:00"></td>
+                      <td><input class="field" type="url" value="https://meeting.tencent.com/d/yyy"></td>
+                      <td><select class="field"><option>已排课</option><option>已完成</option><option>未排</option></select></td>
+                      <td><button class="btn btn--primary btn--sm" type="button" data-save>保存</button> <button class="btn btn--ghost btn--sm" type="button" data-toast="T-2 预习提醒邮件已加入发送队列">发预习邮件</button></td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><span class="app-chip app-chip--code">E02</span> 论坛 v2 · 缓存与异步</th><td>同学 A</td>
+                      <td><input class="field" type="datetime-local" value="2026-10-12T20:00"></td>
+                      <td><input class="field" type="url" placeholder="未填"></td>
+                      <td><select class="field"><option selected>已排课</option><option>已完成</option><option>未排</option></select></td>
+                      <td><button class="btn btn--primary btn--sm" type="button" data-save>保存</button> <button class="btn btn--ghost btn--sm" type="button" data-toast="链接未填，请先补全上课链接">发预习邮件</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="m-sub" style="margin-top:8px">保存即触发排期确认邮件（变更时发变更邮件）；「发预习邮件」手动兜底 T-2 定时任务。课时卡的结构性内容（预习 / 资料 / 作业定义）在本页只读，内容变更走内容管理（决策 D2）。</p>
+            </div>
+            <figcaption>原型-5 · 运营后台排期管理。同一 T01 在两名学员下独立排期、互不影响——多班期模型的最小体现。运营后台为桌面工具，响应式降级到平板可用即可。</figcaption>
+          </figure>
+          <h4>验收要点</h4>
+          <ul>
+            <li>排期保存后学员端学习台 / 课程地图 / 课时卡在 1 分钟内更新（接口实时，无缓存延迟）</li>
+            <li>时间修改 &gt; 1 天时自动发变更邮件；填链接为空则拦截「发预习邮件」并提示</li>
+            <li>学员管理页：列表展示姓名（脱敏邮箱）、班期、进度（已上课 n/15、预习已读 n）、最后登录时间；支持筛选掉队（7 天未登录）</li>
+            <li>邮件中心：发送记录表（收件人 / 类型 / 时间 / 状态），失败可一键重发</li>
+            <li>运营账号独立入口（/admin），与学员端鉴权隔离，登录失败锁定策略同 6.1</li>
+          </ul>
+
+          <h3>6.7 移动端适配规范（面向小程序迁移）</h3>
+          <p>这是 V1 的硬性设计约束，开发与验收共用此表。目标：<strong>备案完成、小程序上线时，学员端页面结构零改动迁移</strong>。</p>
+          <div class="table-wrap">
+            <table>
+              <caption>表 6-3 移动端适配硬约束</caption>
+              <thead><tr><th scope="col">类别</th><th scope="col">约束</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">设计基准</th><td>以 375×667（iPhone SE）为最小设计基准，内容区最大宽 480px 居中；全部页面禁止横向滚动</td></tr>
+                <tr><th scope="row">导航范式</th><td>三 tab 底部导航（首页 / 课表 / 我的），不使用侧边栏与 hover 菜单；二级页一律「‹ 返回」左上角</td></tr>
+                <tr><th scope="row">触控</th><td>可点元素最小 44×44px；主操作按钮全宽或近全宽；表单输入聚焦时页面自动滚动到位（避免键盘遮挡）</td></tr>
+                <tr><th scope="row">排版</th><td>正文 ≥ 13px、辅助 ≥ 11px；行高 ≥ 1.5；长标题两行截断</td></tr>
+                <tr><th scope="row">兼容性</th><td>不做 hover 依赖交互（全部改为 tap）；不依赖 cookie 之外的浏览器能力；链接一律新窗口 / 外跳提示（小程序内为复制链接）</td></tr>
+                <tr><th scope="row">技术选型</th><td>学员端用 uni-app（Vue3）开发并编译为 H5，后续编译微信小程序零重构；CSS 用 rpx 等比单位或 postcss 换算（详见开发文档 01）</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <!-- ================= 7. 状态机 ================= -->
+        <section id="sec-state">
+          <h2><span class="secno">7</span>状态机与数据要点</h2>
+          <p>V1 只有两条状态流（作业状态机已随范围收窄移至 V2）。状态由<strong>排期时间自动推导 + 学员轻操作</strong>驱动，学员端不出现「提交 / 批改」类状态。</p>
+          <h3>1v1 课时状态流（每学员独立）</h3>
+          <ol class="flow">
+            <li class="st">未解锁<small>未排期 / 距上课 &gt; 2 天</small></li>
+            <li class="st">预习中<small>T-2 0 点自动解锁 + 发邮件</small></li>
+            <li class="st">待上课<small>预习已读或上课日到</small></li>
+            <li class="st">已上课<small>运营标记完成（时间过 24h 自动兜底）</small></li>
+          </ol>
+          <p class="flow-note">预习已读是学员动作（标记已读按钮），驱动待办消失与已读率统计；已上课驱动进度条前进。</p>
+          <h3>录播状态流（每讲独立，学员手动标记）</h3>
+          <ol class="flow">
+            <li class="st">未开始<small>默认态</small></li>
+            <li class="st">已完成<small>学员点「标记完成」</small></li>
+          </ol>
+          <h3>核心数据实体</h3>
+          <div class="table-wrap">
+            <table>
+              <caption>表 7-1 核心数据实体（V1 建表范围）</caption>
+              <thead><tr><th scope="col">实体</th><th scope="col">关键字段</th><th scope="col">关系与规则</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">学员 Student</th><td>邮箱 / 密码哈希 / 姓名 / 班期 ID / 状态</td><td>邮箱全局唯一，未激活不能登录；属于一个班期</td></tr>
+                <tr><th scope="row">班期 Cohort</th><td>期号 / 开班日期 / 状态</td><td>课程结构的实例化容器</td></tr>
+                <tr><th scope="row">课时卡 LessonCard</th><td>代号 / 标题 / 类型 / 预习 / 资料清单 / 作业定义</td><td><strong>全局唯一、全班期共用</strong>（固定字段，来自定版 v3）</td></tr>
+                <tr><th scope="row">排期 Schedule</th><td>课时卡 ID / 学员 ID / 时间 / 上课链接 / 状态</th><td>按学员独立，同一课时卡不同学员可不同时间</td></tr>
+                <tr><th scope="row">行为记录 Activity</th><td>预习已读 / 录播完成标记</th><td>驱动待办、进度、已读率统计</td></tr>
+                <tr><th scope="row">邮件记录 EmailLog</th><td>收件人 / 类型 / 状态 / 重试次数 / 关联课时</th><td>防重与失败重发的依据；运营可见</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">
+            <span class="callout__label">关键规则：固定字段与运营字段分离</span>
+            课时卡的结构性内容（预习、资料清单、作业定义）全局一份，只随课程结构版本变更；排期与行为记录按学员隔离。这条规则让维护成本不随学员数翻倍，也是班期隔离模型的根基。完整建表 DDL 见开发文档《02_数据库设计》。
+          </div>
+          <p>V2 预留实体（本期不建表，仅设计留位）：作业提交 Submission、批改反馈 Feedback、资料文件 FileObject。</p>
+        </section>
+
+        <!-- ================= 8. 权限 ================= -->
+        <section id="sec-perm">
+          <h2><span class="secno">8</span>权限与数据隔离</h2>
+          <div class="table-wrap">
+            <table>
+              <caption>表 8-1 角色权限矩阵（V1）</caption>
+              <thead><tr><th scope="col">角色</th><th scope="col">可见范围</th><th scope="col">可操作</th><th scope="col">数据隔离</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">学员</th><td>本班期课程结构 + 自己的排期与进度</td><td>标记预习已读、标记录播完成、改自己的密码</td><td>按学员隔离，互相不可见；无任何写内容的权限</td></tr>
+                <tr><th scope="row">运营 / 讲师</th><td>本班期全部学员数据 + 全部课时卡内容</td><td>排期（时间 / 链接 / 状态）、发邮件、学员管理、学员视图预览</td><td>按班期隔离；V1 单角色共用账号</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>学员端（H5 / 小程序）与运营后台（桌面 /admin）为两套独立入口与鉴权体系，token 不互通。班期模型按多班期隔离设计（决策 D4 推荐）：课程结构全局共享，学员数据挂班期——即使 V1 只有一期，模型按此建立，第二期开班零改表。多讲师分权与操作留痕放 V3。</p>
+        </section>
+
+        <!-- ================= 9. 非功能 ================= -->
+        <section id="sec-nfr">
+          <h2><span class="secno">9</span>非功能需求</h2>
+          <ul>
+            <li><strong>移动端优先（最高优先级）</strong>：学员端全部页面以 375px 宽度为准设计验收（6.7 硬约束表）；核心路径（登录 → 看课表 → 看预习 → 点上课链接）在手机上单手可完成；不依赖 hover；目标微信小程序迁移零重构</li>
+            <li><strong>性能</strong>：4G 网络首屏 ≤ 2 秒；纯展示页无重前端计算；课时卡数据一次拉取本地缓存 + 下拉刷新</li>
+            <li><strong>邮件到达率</strong>：使用企业级 SMTP 服务；单用户单类型 24h 防重；失败自动重试 2 次并进运营失败列表；敏感词与垃圾邮件规则预检（主题不用感叹号 / 全大写）</li>
+            <li><strong>安全</strong>：密码 bcrypt 哈希；JWT 14 天过期 + 刷新；后台独立入口；学员邮箱在后台列表脱敏；邮件内链接带一次性直达 token（7 天有效）；HTTPS 全站</li>
+            <li><strong>可维护</strong>：课程结构完全数据驱动（模块与课时卡为后台数据），课程调整（如 Demo 线回归）只加数据不改代码</li>
+            <li><strong>部署约束</strong>：域名备案完成前，部署于境外服务器（或免备案方案）+ HTTPS；备案完成、迁回国内后域名与数据不变化，学员无感</li>
+          </ul>
+        </section>
+
+        <!-- ================= 10. 分期 ================= -->
+        <section id="sec-road">
+          <h2><span class="secno">10</span>分期路线与 V1 验收</h2>
+          <div class="table-wrap">
+            <table>
+              <caption>表 10-1 分期范围（V1 收窄后重排）</caption>
+              <thead><tr><th scope="col">版本</th><th scope="col">范围</th><th scope="col">时点依据</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">V1（本期）</th><td>邮箱注册登录（白名单 + 验证邮件）、学习台、课程地图、课时详情只读（预习 / 时间 / 链接 / 资料外链 / 作业定义）、邮件通知（六类）、运营后台（排期 / 学员 / 邮件中心）</td><td>10 月内上线，跟当期课程走</td></tr>
+                <tr><th scope="row">V1.5</th><td>微信小程序端（uni-app 编译，页面零改动）+ 微信授权登录并绑定邮箱账号；T-2 / T-0 邮件自动化定时任务</td><td>小程序备案完成后</td></tr>
+                <tr><th scope="row">V2</th><td>作业线上提交（链接式）与批改流、批改反馈通知；资料站内上传下载与权限管控；进度周报邮件自动化</td><td>V1 稳定后（约 1–2 个月）</td></tr>
+                <tr><th scope="row">V3</th><td>进度看板图表、刷题打卡与题库（M13）、多讲师分权与操作留痕、项目空间（论坛仓库入口 / 面试题库 / STAR 简历模板）；Demo 线重新设计定稿后随 V3 追加课时卡</td><td>V2 之后，按运营节奏</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>V1 验收 walkthrough</h3>
+          <p>V1 上线前用一部手机（375px 宽）+ 一个真实学员账号走完下表全部路径，每条通过才算验收完成；桌面仅验运营后台。</p>
+          <div class="table-wrap">
+            <table>
+              <caption>表 10-2 V1 验收路径</caption>
+              <thead><tr><th scope="col">#</th><th scope="col">操作路径</th><th scope="col">通过标准</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">1</th><td>手机注册（白名单邮箱）→ 收验证邮件 → 激活 → 登录</td><td>全程无横向滚动；验证邮件 60 秒内到达；激活后直接进学习台</td></tr>
+                <tr><th scope="row">2</th><td>学习台：看进度 + 下一节课 + 点「看预习」「上课链接」</td><td>进度数字正确；按钮直达且可返回；无排课时显示占位卡</td></tr>
+                <tr><th scope="row">3</th><td>课表：展开 / 折叠 4 模块，点进 T01</td><td>节数与《定版 v3》一致（15 节 + 27 讲）；NOW 标记正确</td></tr>
+                <tr><th scope="row">4</th><td>T01 详情：预习 → 标记已读 → 资料 tab 开外链 → 作业 tab 看定义</td><td>三区完整；标记后学习台待办消失；外链新窗口打开；作业区注明 V1 交付方式</td></tr>
+                <tr><th scope="row">5</th><td>「我的」：看账号信息 + 退出登录</td><td>邮箱与班期正确；退出后回登录页且需重新登录</td></tr>
+                <tr><th scope="row">6</th><td>桌面后台：排 T02 时间与链接 → 保存</td><td>学员端 1 分钟内更新；学员收到排期确认邮件</td></tr>
+                <tr><th scope="row">7</th><td>后台：改 T02 时间（跨天）→ 保存</td><td>学员收到变更邮件（原 → 新标注）；链接为空时拦截发信并提示</td></tr>
+                <tr><th scope="row">8</th><td>后台：发 T-2 预习邮件 → 邮件中心看记录</td><td>邮件内容一句话 + 直达链接；点链接免登录落到预习区；记录状态正确</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ================= 11. 决策 ================= -->
+        <section id="sec-decision">
+          <h2><span class="secno">11</span>待拍板决策</h2>
+          <p>范围收窄后，原四项决策有三项已被本轮指令事实上拍板或降级，仅 D1 / D5 需 Rick 确认。</p>
+          <div class="table-wrap">
+            <table>
+              <caption>表 11-1 决策清单（v1.1 更新）</caption>
+              <thead><tr><th scope="col">编号</th><th scope="col">决策</th><th scope="col">结论 / 选项</th><th scope="col">推荐与理由</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">D1</th><td>账号体系</td><td>邮箱 + 密码（待确认）</td><td>邮箱即账号即通知地址，一次输入两用；未备案阶段做不了微信网页授权，微信登录留给 V1.5 小程序版。若确认，此项即关闭</td></tr>
+                <tr><th scope="row">D2</th><td>内容管理</td><td><strong>已定：轻量自研后台</strong></td><td>排期是每周高频操作必须有界面；课时卡结构性内容（预习 / 资料）低频变更，V1 用种子数据脚本维护 + 后台只读预览，V2 再开编辑表单</td></tr>
+                <tr><th scope="row">D3</th><td>作业形式</td><td><strong>已定：V1 不做</strong>，V2 再拍</td><td>本轮指令移出 V1；V2 推荐链接式（天然留痕、可沉淀作品集、免文件存储）</td></tr>
+                <tr><th scope="row">D4</th><td>班期模型</td><td><strong>已定：多班期隔离</strong></td><td>表结构按多班期建（本期定死，第二期开班零改表）；V1 只建 202610 期一条班期数据</td></tr>
+                <tr><th scope="row">D5</th><td>域名与部署（新增）</td><td>备案期间：境外 VPS / 免备案托管，二选一</td><td>推荐境外 VPS（如香港 / 新加坡轻量服务器）+ Cloudflare：成本最低、可控性最高；备案完成迁回国内时域名不变、学员无感。需提供：一个域名 + SMTP 服务（腾讯企业邮箱 / 阿里云邮件推送）</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>D1 / D5 拍板后记入《进度记忆》M02 决策记录，V1 开发即可全速启动。</p>
+        </section>
+
+        <!-- ================= 12. 术语表 ================= -->
+        <section id="sec-gloss">
+          <h2><span class="secno">12</span>术语表</h2>
+          <div class="table-wrap">
+            <table>
+              <caption>表 12-1 术语定义（对用户展示的名字保持一致）</caption>
+              <thead><tr><th scope="col">术语</th><th scope="col">定义</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">课时代号</th><td>C = CS 理论，E = 工程 coding（论坛项目），T = AI 理论，D = 录播，V = 录播验收；学员端始终以代号 + 标题展示（如 T01 Transformer 架构）</td></tr>
+                <tr><th scope="row">T-2 / T+1</th><td>相对上课日的天数：课前 2 天解锁预习并发邮件；课后 1 天布置作业（V1 面评讲解）</td></tr>
+                <tr><th scope="row">预习包</th><td>课前的结构化预习内容：三问预写 + 关键词（1v1 课），四段式（实操课，V2 恢复）</td></tr>
+                <tr><th scope="row">课时卡</th><td>课时的内容载体。固定字段（预习 / 资料 / 作业定义）全局共用；运营字段（时间 / 链接）按学员排期独立</td></tr>
+                <tr><th scope="row">白名单</th><td>运营预导入的「邮箱 → 班期」对照表；只有白名单邮箱可注册，防止未付费用户进入</td></tr>
+                <tr><th scope="row">班期</th><td>一期学员的容器（如 202610 期）；课程结构跨班期共享，学员数据按班期隔离</td></tr>
+                <tr><th scope="row">移动优先</th><td>界面与交互先按手机竖屏（375px）设计验收，再向上适配平板 / 桌面；本系统学员端以此为准，因最终载体是微信小程序</td></tr>
+                <tr><th scope="row">H5 / 小程序</th><td>备案完成前的 Web 版（H5）与备案后的微信小程序版；同一套 uni-app 代码编译两个目标，页面结构一致</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+
+      <footer class="doc-footer">
+        <h2>参考来源</h2>
+        <ol>
+          <li id="cite-1">《交付体系 2.0 · 课时安排定版 v3》（内部文档，交付体系2.0升级/00_总体设计）</li>
+          <li id="cite-2">Rick 范围收缩指令，2026-10-01：V1 去掉资料与作业上传下载、仅注册登录与课表展示、通知统一邮件、UI 移动端优先目标微信小程序</li>
+          <li id="cite-3">学员提问记录，2026-09，微信沟通原文转述</li>
+          <li id="cite-4">《进度记忆》（内部文档，交付体系2.0升级）</li>
+        </ol>
+        <p class="ver-line">v1.1 · 2026-10-01 · 修订：V1 范围收窄（砍资料 / 作业上传下载）、通知通道统一邮件、学员端移动端优先（小程序目标）、原型全部重做为手机竖屏。配套开发文档见 01_Web系统/V1开发文档/。结构变更请同步《课时安排定版 v3》与《进度记忆》。</p>
+      </footer>
+    </div>
+  </article>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      var toastEl = document.getElementById('toast');
+      var toastTimer = null;
+      function toast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add('on');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { toastEl.classList.remove('on'); }, 1800);
+      }
+
+      // Generic: data-toast buttons & links
+      document.addEventListener('click', function (e) {
+        var t = e.target.closest('[data-toast]');
+        if (!t) return;
+        e.preventDefault();
+        toast(t.getAttribute('data-toast'));
+      });
+
+      // ---- Proto 1: login / register ----
+      (function () {
+        var tabL = document.getElementById('p1-tab-login'), tabR = document.getElementById('p1-tab-reg');
+        var pL = document.getElementById('p1-pane-login'), pR = document.getElementById('p1-pane-reg'), pS = document.getElementById('p1-pane-sent');
+        if (!tabL) return;
+        tabL.addEventListener('click', function () {
+          tabL.setAttribute('aria-selected', 'true'); tabR.setAttribute('aria-selected', 'false');
+          pL.classList.add('on'); pR.classList.remove('on'); pS.style.display = 'none';
+        });
+        tabR.addEventListener('click', function () {
+          tabR.setAttribute('aria-selected', 'true'); tabL.setAttribute('aria-selected', 'false');
+          pR.classList.add('on'); pL.classList.remove('on'); pS.style.display = 'none';
+        });
+
+        document.getElementById('p1-login').addEventListener('click', function () {
+          var email = document.getElementById('p1-email').value.trim();
+          var pass = document.getElementById('p1-pass').value;
+          var err = document.getElementById('p1-err');
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || pass.length < 8) {
+            err.style.display = 'block';
+            return;
+          }
+          err.style.display = 'none';
+          toast('登录成功（演示）：进入学习台（见原型-2）');
+        });
+
+        document.getElementById('p1-register').addEventListener('click', function () {
+          var email = document.getElementById('p1-remail').value.trim();
+          var name = document.getElementById('p1-rname').value.trim();
+          var pass = document.getElementById('p1-rpass').value;
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast('请输入正确的邮箱地址'); return; }
+          if (!name) { toast('请填写姓名'); return; }
+          if (pass.length < 8) { toast('密码至少 8 位，含字母与数字'); return; }
+          document.getElementById('p1-sent-to').textContent = '已发送至 ' + email + '，请在 24 小时内点击激活链接';
+          tabL.setAttribute('aria-selected', 'true'); tabR.setAttribute('aria-selected', 'false');
+          pL.classList.remove('on'); pR.classList.remove('on'); pS.style.display = 'block';
+        });
+
+        document.getElementById('p1-back').addEventListener('click', function () {
+          pS.style.display = 'none';
+          pL.classList.add('on');
+        });
+      })();
+
+      // ---- Proto 2: dashboard todo ----
+      document.addEventListener('click', function (e) {
+        var pv = e.target.closest('[data-done-pv]');
+        if (pv) {
+          var li = pv.closest('.todo-li');
+          if (li) li.remove();
+          toast('已标记预习已读，学习台待办同步消除');
+        }
+      });
+
+      // ---- Proto 3: course map module collapse ----
+      document.querySelectorAll('[data-mod]').forEach(function (head) {
+        head.addEventListener('click', function () {
+          head.closest('.mod').classList.toggle('closed');
+        });
+      });
+
+      // ---- Proto 4: lesson detail tabs ----
+      (function () {
+        var tabs = [
+          ['p4-tab-pv', 'p4-pane-pv'],
+          ['p4-tab-mat', 'p4-pane-mat'],
+          ['p4-tab-hw', 'p4-pane-hw']
+        ];
+        tabs.forEach(function (pair) {
+          var btn = document.getElementById(pair[0]);
+          if (!btn) return;
+          btn.addEventListener('click', function () {
+            tabs.forEach(function (other) {
+              document.getElementById(other[0]).setAttribute('aria-selected', 'false');
+              document.getElementById(other[1]).classList.remove('on');
+            });
+            btn.setAttribute('aria-selected', 'true');
+            document.getElementById(pair[1]).classList.add('on');
+          });
+        });
+      })();
+
+      var p4read = document.getElementById('p4-read');
+      if (p4read) p4read.addEventListener('click', function () {
+        p4read.disabled = true;
+        p4read.textContent = '已读';
+        toast('已标记：T01 预习已读，学习台待办同步消除');
+      });
+
+      // ---- Proto 5: admin save ----
+      document.addEventListener('click', function (e) {
+        var s = e.target.closest('[data-save]');
+        if (s) toast('已保存：排期确认邮件已发送，学员端 1 分钟内更新');
+      });
+    })();
+  </script>
+</body>
+</html>
